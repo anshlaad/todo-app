@@ -489,6 +489,76 @@ box-shadow:
     box-shadow:0 8px 32px rgba(0,0,0,.2);
 }
 
+@media (max-width: 768px){
+
+    body{
+        padding:15px;
+    }
+
+    .header{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+
+    .search-box{
+        width:100%;
+        flex-direction:column;
+    }
+
+    .search-box input,
+    .search-box button{
+        width:100%;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .tasks{
+        grid-template-columns:1fr;
+    }
+
+    .task-card{
+        width:100%;
+    }
+
+    .logout-btn{
+        width:100%;
+        text-align:center;
+    }
+
+    .chart-box{
+        width:100%;
+        max-width:280px;
+        height:280px;
+        margin:auto;
+    }
+
+    .floating-btn{
+        width:55px;
+        height:55px;
+        font-size:26px;
+        right:15px;
+        bottom:15px;
+    }
+}
+
+@media (max-width:768px){
+
+.card{
+    width:100%;
+    padding:20px;
+}
+
+input,
+textarea,
+select,
+button{
+    width:100%;
+}
+
+}
 </style>
 </head>
 
