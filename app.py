@@ -46,6 +46,7 @@ def register_page(request: Request):
 def register(
     request: Request,
     username: str = Form(...),
+    name: str = Form(...),
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
@@ -59,7 +60,9 @@ def register(
             request=request,
             name="register.html",
             context={
-                "error": "Username already exists"
+                "error": "Username already exists",
+                "username": username,
+                "name": name
             }
         )
 
@@ -67,6 +70,7 @@ def register(
 
     new_user = User(
         username=username,
+        name=name,
         hashed_password=hashed_password
     )
 
