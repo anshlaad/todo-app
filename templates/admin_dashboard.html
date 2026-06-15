@@ -1,0 +1,48 @@
+<style>
+body{
+background:linear-gradient(135deg,#667eea,#764ba2);
+font-family:Poppins;
+color:white;
+}
+
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+padding:20px;
+border-radius:20px;
+margin:10px;
+}
+
+table{
+width:100%;
+background:rgba(255,255,255,0.1);
+border-radius:10px;
+}
+</style>
+
+
+<h1>Admin Dashboard</h1>
+
+<div class="stats">
+
+<div class="card">
+<h2>{{ total_users }}</h2>
+<p>Total Users</p>
+</div>
+
+<div class="card">
+<h2>{{ total_tasks }}</h2>
+<p>Total Tasks</p>
+</div>
+
+<div class="card">
+<h2>{{ completed_tasks }}</h2>
+<p>Completed</p>
+</div>
+
+<div class="card">
+<h2>{{ pending_tasks }}</h2>
+<p>Pending</p>
+</div>
+
+</div>

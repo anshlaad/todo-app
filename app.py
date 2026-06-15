@@ -10,10 +10,48 @@ from database import SessionLocal, engine, Base
 from models import User, Task
 
 from passlib.context import CryptContext
+from sqladmin import Admin, ModelView
+
+ADMIN_USERNAME = "ansh"
+ADMIN_PASSWORD = "ansh@2200"
 
 Base.metadata.create_all(bind=engine)
 
+
+
+class UserAdmin(ModelView, model=User):
+
+    column_list = [
+        User.id,
+        User.name,
+        User.username
+    ]
+
+    name = "User"
+    name_plural = "Users"
+
+class TaskAdmin(ModelView, model=Task):
+
+    column_list = [
+        Task.id,
+        Task.title,
+        Task.priority,
+        Task.completed,
+        Task.owner_id
+    ]
+
+    name = "Task"
+    name_plural = "Tasks"
+
 app = FastAPI()
+
+admin = Admin(
+    app,
+    engine
+)
+
+admin.add_view(UserAdmin)
+admin.add_view(TaskAdmin)
 
 templates = Jinja2Templates(directory="templates")
 
@@ -29,6 +67,102 @@ def get_db():
         yield db
     finally:
         db.close()
+
+def admin_required(request: Request):
+    if request.cookies.get("admin") != "true":
+        raise HTTPException(status_code=401, detail="Admin only access")
+    
+@app.get("/admin-login")
+def admin_login_page(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_login.html",
+        context={}
+    )
+
+@app.post("/admin-login")
+def admin_login(
+    username: str = Form(...),
+    password: str = Form(...)
+):
+
+    if (
+        username == ADMIN_USERNAME
+        and
+        password == ADMIN_PASSWORD
+    ):
+
+        response = RedirectResponse(
+            url="/admin-dashboard",
+            status_code=303
+        )
+
+        response.set_cookie(
+            "admin",
+            "true"
+        )
+
+        return response
+
+    raise HTTPException(
+        status_code=401,
+        detail="Invalid Admin Login"
+    )
+
+@app.get("/admin-dashboard")
+def admin_dashboard(
+    request: Request,
+    db: Session = Depends(get_db)
+):
+
+    if request.cookies.get("admin") != "true":
+        return RedirectResponse(
+            "/admin-login",
+            status_code=303
+        )
+
+    total_users = db.query(User).count()
+
+    total_tasks = db.query(Task).count()
+
+    completed_tasks = db.query(Task).filter(
+        Task.completed == True
+    ).count()
+
+    pending_tasks = db.query(Task).filter(
+        Task.completed == False
+    ).count()
+
+    recent_users = db.query(User).all()[-5:]
+
+    recent_tasks = db.query(Task).all()[-5:]
+
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_dashboard.html",
+        context={
+            "total_users": total_users,
+            "total_tasks": total_tasks,
+            "completed_tasks": completed_tasks,
+            "pending_tasks": pending_tasks,
+            "recent_users": recent_users,
+            "recent_tasks": recent_tasks
+        }
+    )
+
+@app.get("/admin-logout")
+def admin_logout():
+
+    response = RedirectResponse(
+        "/admin-login",
+        status_code=303
+    )
+
+    response.delete_cookie("admin")
+
+    return response
+
 
 
 # REGISTER PAGE
