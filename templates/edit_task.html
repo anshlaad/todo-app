@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Task</title>
+<style>
+
+body{
+font-family:Poppins;
+background:#667eea;
+padding:40px;
+}
+
+.card{
+max-width:500px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:20px;
+}
+
+input,textarea,select{
+width:100%;
+padding:12px;
+margin:10px 0;
+}
+
+button{
+padding:12px;
+width:100%;
+background:#667eea;
+color:white;
+border:none;
+border-radius:10px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<h2>Edit Task</h2>
+
+<form method="post">
+
+<input
+name="title"
+value="{{ task.title }}"
+required
+>
+
+<textarea name="description">
+{{ task.description }}
+</textarea>
+
+<input
+name="category"
+value="{{ task.category }}"
+>
+
+<input
+type="date"
+name="deadline"
+value="{{ task.deadline }}"
+>
+
+<select name="priority">
+
+<option value="High">High</option>
+<option value="Medium">Medium</option>
+<option value="Low">Low</option>
+
+</select>
+
+<button>
+Update Task
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

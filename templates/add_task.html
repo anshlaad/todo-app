@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Task</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(
+135deg,
+#667eea,
+#764ba2
+);
+}
+
+.card{
+width:500px;
+padding:35px;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(15px);
+border-radius:25px;
+box-shadow:0 8px 32px rgba(0,0,0,.2);
+color:white;
+}
+
+.card h1{
+text-align:center;
+margin-bottom:25px;
+}
+
+input,
+textarea,
+select{
+width:100%;
+padding:14px;
+margin-bottom:15px;
+border:none;
+outline:none;
+border-radius:12px;
+font-size:15px;
+}
+
+textarea{
+resize:none;
+height:120px;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+background:white;
+color:#764ba2;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-3px);
+}
+
+.back{
+display:block;
+text-align:center;
+margin-top:15px;
+color:white;
+text-decoration:none;
+font-weight:600;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>➕ Create New Task</h1>
+
+<form method="post" action="/tasks">
+
+<input
+type="text"
+name="title"
+placeholder="Task Title"
+required
+>
+
+<textarea
+name="description"
+placeholder="Task Description"
+></textarea>
+
+<select name="category">
+
+<option value="">
+Select Category
+</option>
+
+<option value="Work">
+Work
+</option>
+
+<option value="Personal">
+Personal
+</option>
+
+<option value="Study">
+Study
+</option>
+
+<option value="Shopping">
+Shopping
+</option>
+
+<option value="Health">
+Health
+</option>
+
+</select>
+
+<label>Priority</label>
+
+<select name="priority">
+
+    <option value="High">
+        🔴 High
+    </option>
+
+    <option value="Medium" selected>
+        🟡 Medium
+    </option>
+
+    <option value="Low">
+        🟢 Low
+    </option>
+
+</select>
+
+<input
+type="datetime-local"
+name="deadline"
+>
+
+<button type="submit">
+Create Task
+</button>
+
+</form>
+
+<a href="/" class="back">
+⬅ Back to Dashboard
+</a>
+
+</div>
+
+</body>
+</html>
